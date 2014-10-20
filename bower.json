@@ -1,0 +1,22 @@
+{
+  "name": "PayumServerUI",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Payum/PayumServerUI",
+  "authors": [
+    "slava hatnuke <slava.hatnuke@gmail.com>"
+  ],
+  "description": "Payum Server UI",
+  "keywords": [
+    "payum",
+    "server",
+    "ui"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
