@@ -4,11 +4,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PayumClient</title>
+    <title>PayumServer</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
+
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
 
     <link rel="stylesheet" href="css/main.css">
 
@@ -20,31 +25,43 @@
     <![endif]-->
 </head>
 <body>
+
+
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">Menu</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">PayumClient</a>
+            <a class="navbar-brand" href="#">PayumServer</a>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav visible-xs">
                 <li><a href="#">Orders</a></li>
                 <li class="active"><a href="#">Gateways</a></li>
                 <li><a href="#">Storages</a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="sub-header">Gateways <button type="button" class="btn btn-success pull-right">Add new</button></h2>
+    </div>
+</div>
+
+<div class="container-fluid payum-ui-workspace">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar hidden-xs">
+                <li><a href="#">Orders</a></li>
+                <li class="active"><a href="#">Gateways</a></li>
+                <li><a href="#">Storages</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-md-10 main">
+            <h2 class="sub-header">Gateways
+                <button type="button" class="btn btn-success pull-right">Add new</button>
+            </h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
@@ -100,57 +117,63 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-2 col-sm-offset-2 col-md-6 col-md-offset-2 main">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="name" class="control-label col-xs-2">Name</label>
-                        <div class="col-xs-10">
-                            <input type="password" class="form-control" id="name" placeholder="Name">
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-2 col-md-6 col-md-offset-2 main">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="name" class="control-label col-xs-2">Name</label>
+
+                    <div class="col-xs-10">
+                        <input type="password" class="form-control" id="name" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="gateways" class="control-label col-xs-2">Gateways</label>
+
+                    <div class="col-xs-10">
+                        <select id="gateways" class="form-control">
+                            <option>Paypal ExpressCheckout</option>
+                            <option>Stripe.Js</option>
+                            <option>Stripe Checkout</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" class="control-label col-xs-2">Username</label>
+
+                    <div class="col-xs-10">
+                        <input type="email" class="form-control" id="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label col-xs-2">Password</label>
+
+                    <div class="col-xs-10">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signature" class="control-label col-xs-2">Signature</label>
+
+                    <div class="col-xs-10">
+                        <input type="password" class="form-control" id="signature" placeholder="Signature">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" checked="checked">Sandbox</label>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="gateways" class="control-label col-xs-2">Gateways</label>
-                        <div class="col-xs-10">
-                            <select id="gateways" class="form-control">
-                                <option>Paypal ExpressCheckout</option>
-                                <option>Stripe.Js</option>
-                                <option>Stripe Checkout</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-2 col-xs-10">
+                        <button type="submit" class="btn btn-primary">Create</button>
                     </div>
-                    <div class="form-group">
-                        <label for="username" class="control-label col-xs-2">Username</label>
-                        <div class="col-xs-10">
-                            <input type="email" class="form-control" id="username" placeholder="Username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password" class="control-label col-xs-2">Password</label>
-                        <div class="col-xs-10">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="signature" class="control-label col-xs-2">Signature</label>
-                        <div class="col-xs-10">
-                            <input type="password" class="form-control" id="signature" placeholder="Signature">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <div class="checkbox">
-                                <label><input type="checkbox" checked="checked">Sandbox</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Create</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -158,5 +181,6 @@
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>
