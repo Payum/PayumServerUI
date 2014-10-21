@@ -51,10 +51,7 @@ define(
 
                 $scope.mainMenu = MainMenu;
 
-                if (Settings.isOk()) {
-                    $state.go('app.gateways');
-                }
-                else {
+                if (!Settings.isOk()) {
                     $state.go('app.settings');
                 }
 
