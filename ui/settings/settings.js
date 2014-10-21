@@ -24,19 +24,16 @@ define(['./settings.service'], function () {
 
             $scope.testUrl = function () {
 
-                $http.get(Settings.api + '/configs/payments').
-                    success(function () {
-                        Settings.apiHealth = true;
-                    }).
-                    error(function () {
-                        Settings.apiHealth = false;
-                    });
-
+                if (Settings.isOk()) {
+                    $http.get(Settings.api + '/configs/payments').
+                        success(function () {
+                            Settings.apiHealth = true;
+                        }).
+                        error(function () {
+                            Settings.apiHealth = false;
+                        });
+                }
             }
-
-            $scope.$watch('settings.api', function () {
-                $scope.testUrl();
-            });
 
             $scope.testUrl();
 

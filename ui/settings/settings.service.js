@@ -10,7 +10,7 @@ define([], function () {
                 apiHealth: false,
 
                 isOk: function () {
-                    return this.api && this.apiHealth;
+                    return this.api;
                 },
 
                 save: function (settings) {
