@@ -16,10 +16,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Foo</td>
-                    <td>paypal_express_checkout</td>
-                    <td>{"foo": "bar"}</td>
+                <tr ng-repeat="payment in payments">
+                    <td>{{payment.name}}</td>
+                    <td>{{payment.factory}}</td>
+                    <td>{{payment.name}} TBD</td>
                     <td>
                         <div class="btn-group hidden-xs">
                             <button type="button" class="btn btn-xs btn-default">Edit</button>
@@ -39,36 +39,6 @@
                             </ul>
                         </div>
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>Bar</td>
-                    <td>stripe_js</td>
-                    <td>{"foo": "bar"}</td>
-                    <td>
-                        <button type="button" class="btn btn-xs btn-default">Edit</button>
-                        <button type="button" class="btn btn-xs btn-default">Disable</button>
-                        <button type="button" class="btn btn-xs btn-default">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Bar</td>
-                    <td>stripe_js</td>
-                    <td>{"foo": "bar"}</td>
-                    <td>
-                        <button type="button" class="btn btn-xs btn-default">Edit</button>
-                        <button type="button" class="btn btn-xs btn-default">Enable</button>
-                        <button type="button" class="btn btn-xs btn-default">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Bar</td>
-                    <td>stripe_js</td>
-                    <td>{"foo": "bar"}</td>
-                    <td>
-                        <button type="button" class="btn btn-xs btn-default">Edit</button>
-                        <button type="button" class="btn btn-xs btn-default">Enable</button>
-                        <button type="button" class="btn btn-xs btn-default">Delete</button>
                     </td>
                 </tr>
                 </tbody>

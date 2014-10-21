@@ -8,7 +8,8 @@ define(['service/api'], function () {
                 url: "/gateways",
                 views: {
                     'main@app': {
-                        templateUrl: require.toUrl('./gateways/list.html')
+                        templateUrl: require.toUrl('./gateways/list.html'),
+                        controller: 'PS.gateways.list'
                     }
                 }
             });
@@ -43,6 +44,33 @@ define(['service/api'], function () {
                 });
 
             }).all('configs/payments/metas');
+        })
+
+        .factory('Payment', function (Api) {
+
+            return Api.withConfig(function (config) {
+
+                config.addResponseInterceptor(function (res, operation) {
+                    if (operation == 'getList') {
+
+                        var list = [];
+
+                        angular.forEach(res.metas, function (meta) {
+                            list.push(meta);
+                        });
+
+                        return list;
+                    }
+                });
+
+            }).all('configs/payments');
+        })
+
+        .controller('PS.gateways.list', function ($scope, Payment) {
+
+            Payment.getList().then(function (payments) {
+                $scope.payments = payments;
+            });
         })
 
         .controller('PS.gateways.form', function ($scope, PaymentMeta) {
