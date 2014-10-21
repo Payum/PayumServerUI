@@ -12,7 +12,7 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav visible-xs">
-                <li ng-repeat="item in mainMenu"><a ui-sref="{{item.state}}">{{item.name}}</a></li>
+                <li ng-repeat="item in mainMenu" ui-sref-active="active"><a ui-sref="{{item.state}}">{{item.name}}</a></li>
             </ul>
         </div>
     </div>
@@ -21,8 +21,8 @@
 <div class="container-fluid payum-ui-workspace">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar hidden-xs">
-                <li ng-repeat="item in mainMenu"><a ui-sref="{{item.state}}">{{item.name}}</a></li>
+            <ul class="nav nav-pills nav-stacked hidden-xs">
+                <li ng-repeat="item in mainMenu" ui-sref-active="active"><a ui-sref="{{item.state}}">{{item.name}}</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-md-10 main" ui-view="main">

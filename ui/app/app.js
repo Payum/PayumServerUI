@@ -38,20 +38,26 @@ define(
 
             .config(function ($stateProvider, $urlRouterProvider) {
 
-                $urlRouterProvider.otherwise('');
+                $urlRouterProvider.otherwise('/app');
 
                 $stateProvider.state('app', {
-                    url: "",
+                    url: "/app",
                     templateUrl: require.toUrl('./app/app.html'),
                     controller: 'PS.app'
                 });
 
             })
-            .controller('PS.app', function ($scope, $state, MainMenu) {
+            .controller('PS.app', function ($scope, $state, MainMenu, Settings) {
 
                 $scope.mainMenu = MainMenu;
 
-                $state.go('app.gateways');
+                if (Settings.isOk()) {
+                    $state.go('app.gateways');
+                }
+                else {
+                    $state.go('app.settings');
+                }
+
             });
 
     });
