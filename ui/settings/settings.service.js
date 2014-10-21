@@ -1,14 +1,15 @@
 define([], function () {
 
-    angular.module('PS.settings.service', [])
+    angular.module('PS.settings.service', ['ngCookies'])
 
-        .factory('Settings', function () {
+        .factory('Settings', function ($cookieStore) {
+
             return {
+
                 api: '',
-                token: '',
 
                 isOk: function () {
-                    return this.api && this.token;
+                    return this.api;
                 }
             }
         });
