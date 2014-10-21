@@ -14,12 +14,32 @@ define(['./settings.service'], function () {
                 }
             });
         })
-        .controller('PS.settings', function ($scope, Settings, $state) {
+        .controller('PS.settings', function ($scope, Settings, $state, $http) {
             $scope.settings = Settings;
 
             $scope.save = function (settings) {
+                Settings.save(settings);
                 $state.go('app.gateways');
             }
+
+            $scope.testUrl = function () {
+
+                $http.get(Settings.api + '/configs/payments').
+                    success(function () {
+                        Settings.apiHealth = true;
+                    }).
+                    error(function () {
+                        Settings.apiHealth = false;
+                    });
+
+            }
+
+            $scope.$watch('settings.api', function () {
+                $scope.testUrl();
+            });
+
+            $scope.testUrl();
+
         })
     ;
 

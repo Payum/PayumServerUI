@@ -1,4 +1,3 @@
-
 <div class="row">
 
     <div class="col-md-12">
@@ -9,19 +8,20 @@
 
                 <form class="form-horizontal" ng-submit="save(settings)">
                     <div class="form-group">
-                        <label for="api-url" class="control-label col-xs-2">API URL</label>
+                        <label for="api-url" class="control-label col-xs-2">API</label>
 
                         <div class="col-xs-10">
-                            <input type="url" class="form-control" id="api-url" placeholder="API URL" ng-model="settings.api" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="token" class="control-label col-xs-2">Token</label>
 
-                        <div class="col-xs-10">
-                            <input type="password" class="form-control" id="token" placeholder="Token" ng-model="settings.token" required>
+                            <div class="input-group" ng-class="{'has-success': settings.apiHealth, 'has-warning': !settings.apiHealth}">
+                                <input type="url" class="form-control" id="api-url" placeholder="URL" ng-model="settings.api" required>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-default" ng-class="{'btn-success': settings.apiHealth, 'btn-danger': !settings.apiHealth}" ng-click="testUrl()">Test</a>
+                                </span>
+                            </div>
                         </div>
+
                     </div>
+
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
                             <button type="submit" class="btn btn-primary">save</button>

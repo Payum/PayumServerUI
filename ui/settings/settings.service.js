@@ -4,14 +4,26 @@ define([], function () {
 
         .factory('Settings', function ($cookieStore) {
 
-            return {
+            var Settings = {
 
                 api: '',
+                apiHealth: false,
 
                 isOk: function () {
-                    return this.api;
+                    return this.api && this.apiHealth;
+                },
+
+                save: function (settings) {
+                    angular.extend(this, settings);
+                    $cookieStore.put('api', this.api);
                 }
+            };
+
+            if ($cookieStore.get('api')) {
+                Settings.api = $cookieStore.get('api');
             }
+
+            return  Settings
         });
 
 });
