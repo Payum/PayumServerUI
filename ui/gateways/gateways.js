@@ -32,14 +32,7 @@ define(['service/api'], function () {
 
                 config.addResponseInterceptor(function (res, operation) {
                     if (operation == 'getList') {
-
-                        var list = [];
-
-                        angular.forEach(res.metas, function (meta) {
-                            list.push(meta);
-                        });
-
-                        return list;
+                        return _.toArray(res.metas);
                     }
                 });
 
@@ -52,14 +45,7 @@ define(['service/api'], function () {
 
                 config.addResponseInterceptor(function (res, operation) {
                     if (operation == 'getList') {
-
-                        var list = [];
-
-                        angular.forEach(res.metas, function (meta) {
-                            list.push(meta);
-                        });
-
-                        return list;
+                        return _.toArray(res.configs);
                     }
                 });
 
@@ -73,13 +59,29 @@ define(['service/api'], function () {
             });
         })
 
-        .controller('PS.gateways.form', function ($scope, PaymentMeta) {
+        .controller('PS.gateways.form', function ($scope, Payment, PaymentMeta) {
+
+            $scope.payment = {};
 
             PaymentMeta.getList().then(function (metas) {
-                console.log(metas);
+                $scope.metas = metas;
             });
 
-            console.log('ok');
+            $scope.getGenerator = function () {
+
+                if(!$scope.metas) return [];
+
+                var meta = _($scope.metas).find(function (item) {
+                    return item.name == $scope.payment.factory
+                });
+
+                return meta;
+
+            }
+
+            $scope.save = function () {
+                console.log($scope.payment);
+            }
         })
     ;
 

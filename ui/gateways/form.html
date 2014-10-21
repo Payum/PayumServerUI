@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -11,22 +10,22 @@
                         <label for="name" class="control-label col-xs-2">Name</label>
 
                         <div class="col-xs-10">
-                            <input type="password" class="form-control" id="name" placeholder="Name">
+                            <input type="text" class="form-control" id="name" placeholder="Name"
+                                   ng-model="payment.name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="gateways" class="control-label col-xs-2">Gateways</label>
 
                         <div class="col-xs-10">
-                            <select id="gateways" class="form-control">
-                                <option>Paypal ExpressCheckout</option>
-                                <option>Stripe.Js</option>
-                                <option>Stripe Checkout</option>
+                            <select id="gateways" class="form-control" ng-model="payment.factory"
+                                    ng-options="meta.name as meta.name for meta in metas">
+                                <option value="">---</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="username" class="control-label col-xs-2">Username</label>
+                    <div class="form-group" ng-repeat="item in getGenerator()">
+                        <label for="username" class="control-label col-xs-2">{{item.name}}</label>
 
                         <div class="col-xs-10">
                             <input type="email" class="form-control" id="username" placeholder="Username">
@@ -57,8 +56,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary" ui-sref="app.gateways">Create</button>
-                            <button type="submit" class="btn btn-default" ui-sref="app.gateways">Cancel</button>
+                            <button type="submit" class="btn btn-primary" ng-click="save()">Create</button>
+                            <a class="btn btn-default" ui-sref="app.gateways">Cancel</a>
                         </div>
                     </div>
                 </form>
