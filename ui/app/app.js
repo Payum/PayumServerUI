@@ -2,14 +2,16 @@ define(
     [
         'gateways/gateways',
         'orders/orders',
-        'storages/storages'
+        'storages/storages',
+        'settings/settings'
     ], function () {
 
         angular.module('PS.app', [
                 'ui.router',
                 'PS.gateways',
                 'PS.orders',
-                'PS.storages'
+                'PS.storages',
+                'PS.settings'
             ])
 
             .factory('MainMenu', function () {
@@ -26,6 +28,10 @@ define(
                     {
                         name: 'Storages',
                         state: 'app.storages'
+                    },
+                    {
+                        name: 'Settings',
+                        state: 'app.settings'
                     }
                 ]
             })
