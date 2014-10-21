@@ -32,6 +32,7 @@ define(['service/api'], function () {
 
                 config.addResponseInterceptor(function (res, operation) {
                     if (operation == 'getList') {
+                        console.log(res);
                         return _.toArray(res.metas);
                     }
                 });
@@ -75,8 +76,7 @@ define(['service/api'], function () {
                     return item.name == $scope.payment.factory
                 });
 
-                return meta;
-
+                return meta.plain();
             }
 
             $scope.save = function () {
