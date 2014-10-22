@@ -9,10 +9,6 @@ define([], function () {
                 api: '',
                 apiHealth: false,
 
-                isOk: function () {
-                    return this.api;
-                },
-
                 save: function (settings) {
                     angular.extend(this, settings);
                     $cookieStore.put('api', this.api);
