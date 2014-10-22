@@ -19,7 +19,7 @@
 
                         <div class="col-xs-10">
                             <select id="gateways" class="form-control" ng-model="payment.factory" ng-change="updateForm()"
-                                    ng-options="meta.name as meta.name for meta in metas">
+                                    ng-options="meta.name as meta.name for meta in metas" required>
                                 <option value="">---</option>
                             </select>
                         </div>

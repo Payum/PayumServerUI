@@ -77,6 +77,8 @@ define(['service/api'], function () {
                         delete $scope.model[name];
                     });
 
+                    var aOptions = [];
+
                     angular.forEach(options, function (option, name) {
                         option.name = name;
                         option.label = option.label || option.name;
@@ -84,9 +86,11 @@ define(['service/api'], function () {
                         option.default = option.default || null;
 
                         $scope.model[name] = option.default;
+
+                        aOptions.push(option);
                     });
 
-                    $scope.options = options;
+                    $scope.options = aOptions;
                 }
             });
 
