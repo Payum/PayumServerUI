@@ -1,5 +1,7 @@
 define([
-    'directive/ps-form-fields/ps-form-fields', './payments.service'], function () {
+    'directive/ps-form-fields/ps-form-fields',
+    './payments.service'
+], function () {
 
     angular.module('PS.payments', [
             'ui.router',
