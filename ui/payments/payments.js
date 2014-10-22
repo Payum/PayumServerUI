@@ -1,6 +1,12 @@
-define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
+define([
+    'directive/ps-form-fields/ps-form-fields', './payments.service'], function () {
 
-    angular.module('PS.payments', ['ui.router', 'PS.service.api', 'PS.directive.ps-form-fields'])
+    angular.module('PS.payments', [
+            'ui.router',
+            'PS.service.api',
+            'PS.directive.ps-form-fields',
+            'PS.payments.service'
+        ])
 
         .config(function ($stateProvider) {
 
@@ -24,14 +30,6 @@ define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
                 }
             });
 
-        })
-
-        .factory('PaymentConfigMeta', function (Api) {
-            return Api.resource('/configs/payments/metas');
-        })
-
-        .factory('PaymentConfig', function (Api) {
-            return Api.resource('/configs/payments');
         })
 
         .controller('PS.payments.list', function ($scope, PaymentConfig, $state) {
