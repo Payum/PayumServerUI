@@ -1,0 +1,19 @@
+<div class="form-group" ng-repeat="option in options">
+
+    <label for="field-{{$index}}" class="control-label col-xs-2">{{option.label}}</label>
+
+    <div class="col-xs-10">
+
+
+        <input ng-if="option.type == 'text'" type="text" class="form-control" id="field-{{$index}}" placeholder="{{option.name}}" ng-value="option.default">
+
+        <input ng-if="option.type == 'password'" type="password" class="form-control" id="field-{{$index}}" placeholder="{{option.name}}">
+
+
+        <div ng-if="option.type == 'checkbox'" class="checkbox" >
+            <label><input type="checkbox" ng-checked="option.default" id="field-{{$index}}"> &nbsp;</label>
+        </div>
+
+
+    </div>
+</div>

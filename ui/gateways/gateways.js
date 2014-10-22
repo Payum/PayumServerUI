@@ -52,11 +52,47 @@ define(['service/api'], function () {
                 $scope.metas = _.toArray($scope.metasConfig.metas);
             });
 
+
+            $scope.updateForm = function () {
+                $scope.fields = _.find($scope.metas, function (meta) {
+                    return $scope.payment.factory == meta.name;
+                });
+            }
+
             $scope.save = function () {
                 console.log($scope.payment);
+                $scope.payment.$save();
             }
         })
+
+        .controller('psFormFields', function ($scope, $parse, $filter, $attrs) {
+
+            $scope.$watch($attrs.psFormFields, function(options) {
+                if (options) {
+
+                    console.log(options);
+
+                    angular.forEach(options, function (option, name) {
+                        option.name = name;
+                        option.label = option.label || option.name;
+                        option.type = option.type || 'text';
+                    });
+
+                    $scope.options = options;
+                }
+            });
+
+        })
+        .directive('psFormFields', function () {
+            return {
+                restrict: 'AE',
+                controller: 'psFormFields',
+                templateUrl: require.toUrl('./directive/ps-form-fields/layout.html'),
+                link: new Function()
+            };
+
+        })
+
     ;
 
 });
-
