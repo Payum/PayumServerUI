@@ -47,9 +47,13 @@ define(
 
                 $scope.mainMenu = MainMenu;
 
-                if (!Settings.isOk()) {
+                Settings.check().then(function () {
+                    if ($state.is('app')) {
+                        $state.go('app.payments');
+                    }
+                }, function () {
                     $state.go('app.settings');
-                }
+                });
 
             });
 

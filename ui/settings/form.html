@@ -13,7 +13,14 @@
                         <div class="col-xs-10">
 
                             <div class="input-group" ng-class="{'has-success': settings.apiHealth, 'has-warning': !settings.apiHealth}">
-                                <input type="url" class="form-control" id="api-url" placeholder="URL" ng-model="settings.api" required>
+                                <input type="url"
+                                       class="form-control"
+                                       id="api-url"
+                                       placeholder="URL"
+                                       ng-model="settings.api"
+                                       ng-change="testUrl()"
+                                       ng-model-options="{ debounce: 500 }"
+                                       required>
                                 <span class="input-group-btn">
                                     <a class="btn btn-default" ng-class="{'btn-success': settings.apiHealth, 'btn-danger': !settings.apiHealth}" ng-click="testUrl()">Test</a>
                                 </span>

@@ -2,7 +2,7 @@ define([], function () {
 
     angular.module('PS.settings.service', ['ngCookies'])
 
-        .factory('Settings', function ($cookieStore) {
+        .factory('Settings', function ($cookieStore, $http, $q) {
 
             var Settings = {
 
@@ -16,6 +16,21 @@ define([], function () {
                 save: function (settings) {
                     angular.extend(this, settings);
                     $cookieStore.put('api', this.api);
+                },
+                
+                check: function () {
+
+                    return $q(function (resolve, reject) {
+                        $http.get(Settings.api + '/configs/payments').
+                            success(function () {
+                                Settings.apiHealth = true;
+                                resolve();
+                            }).
+                            error(function () {
+                                Settings.apiHealth = false;
+                                reject();
+                            });
+                    })
                 }
             };
 
