@@ -15,10 +15,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="gateways" class="control-label col-xs-2">Gateways</label>
+                        <label for="payments" class="control-label col-xs-2">Payments</label>
 
                         <div class="col-xs-10">
-                            <select id="gateways" class="form-control" ng-model="payment.factory" ng-change="updateForm()"
+                            <select id="payments" class="form-control" ng-model="payment.factory" ng-change="updateForm()"
                                     ng-options="meta.name as meta.name for meta in metas" required>
                                 <option value="">---</option>
                             </select>
@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
                             <button type="submit" class="btn btn-primary">Create</button>
-                            <a class="btn btn-default" ui-sref="app.gateways">Cancel</a>
+                            <a class="btn btn-default" ui-sref="app.payments">Cancel</a>
                         </div>
                     </div>
                 </form>

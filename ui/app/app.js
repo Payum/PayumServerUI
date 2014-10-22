@@ -1,6 +1,6 @@
 define(
     [
-        'gateways/gateways',
+        'payments/payments',
         'orders/orders',
         'storages/storages',
         'settings/settings'
@@ -8,7 +8,7 @@ define(
 
         angular.module('PS.app', [
                 'ui.router',
-                'PS.gateways',
+                'PS.payments',
                 'PS.orders',
                 'PS.storages',
                 'PS.settings'
@@ -22,12 +22,8 @@ define(
                         state: 'app.orders'
                     },
                     {
-                        name: 'Gateways',
-                        state: 'app.gateways'
-                    },
-                    {
-                        name: 'Storages',
-                        state: 'app.storages'
+                        name: 'Payments',
+                        state: 'app.payments'
                     },
                     {
                         name: 'Settings',

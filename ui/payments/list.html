@@ -2,8 +2,8 @@
 <div class="row">
     <div class="col-md-12">
 
-        <h2 class="sub-header">Gateways
-            <button type="button" class="btn btn-success pull-right" ui-sref="app.gateways.new">Add new</button>
+        <h2 class="sub-header">Payments
+            <button type="button" class="btn btn-success pull-right" ui-sref="app.payments.new">Add new</button>
         </h2>
         <div class="table-responsive">
             <table class="table table-striped">
@@ -19,11 +19,10 @@
                 <tr ng-repeat="payment in payments">
                     <td>{{payment.name}}</td>
                     <td>{{payment.factory}}</td>
-                    <td>{{payment.name}} TBD</td>
+                    <td>{{payment.options}}</td>
                     <td>
                         <div class="btn-group hidden-xs">
                             <button type="button" class="btn btn-xs btn-default">Edit</button>
-                            <button type="button" class="btn btn-xs btn-default">Disable</button>
                             <button type="button" class="btn btn-xs btn-danger">Delete</button>
                         </div>
 
@@ -34,7 +33,6 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Edit</a></li>
-                                <li><a href="#">Disable</a></li>
                                 <li><a href="#">Delete</a></li>
                             </ul>
                         </div>

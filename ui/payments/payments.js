@@ -1,25 +1,25 @@
 define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
 
-    angular.module('PS.gateways', ['ui.router', 'PS.service.api', 'PS.directive.ps-form-fields'])
+    angular.module('PS.payments', ['ui.router', 'PS.service.api', 'PS.directive.ps-form-fields'])
 
         .config(function ($stateProvider) {
 
-            $stateProvider.state('app.gateways', {
-                url: "/gateways",
+            $stateProvider.state('app.payments', {
+                url: "/payments",
                 views: {
                     'main@app': {
-                        templateUrl: require.toUrl('./gateways/list.html'),
-                        controller: 'PS.gateways.list'
+                        templateUrl: require.toUrl('./payments/list.html'),
+                        controller: 'PS.payments.list'
                     }
                 }
             });
 
-            $stateProvider.state('app.gateways.new', {
+            $stateProvider.state('app.payments.new', {
                 url: "/new",
                 views: {
                     'main@app': {
-                        templateUrl: require.toUrl('./gateways/form.html'),
-                        controller: 'PS.gateways.form'
+                        templateUrl: require.toUrl('./payments/form.html'),
+                        controller: 'PS.payments.form'
                     }
                 }
             });
@@ -34,13 +34,13 @@ define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
             return Api.resource('/configs/payments');
         })
 
-        .controller('PS.gateways.list', function ($scope, PaymentConfig, $state) {
+        .controller('PS.payments.list', function ($scope, PaymentConfig, $state) {
             $scope.paymentConfig = PaymentConfig.get(function () {
                 $scope.payments = $scope.paymentConfig.configs;
             });
         })
 
-        .controller('PS.gateways.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state) {
+        .controller('PS.payments.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state) {
 
             $scope.payment = new PaymentConfig({
                 name: '',
@@ -61,7 +61,7 @@ define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
 
             $scope.save = function () {
                 $scope.payment.$save(function () {
-                    $state.go('app.gateways');
+                    $state.go('app.payments');
                 });
             }
         })
