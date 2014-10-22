@@ -67,20 +67,30 @@ define(['service/api'], function () {
 
         .controller('psFormFields', function ($scope, $parse, $filter, $attrs) {
 
+            var getter = $parse($attrs.ngModel);
+            $scope.model  = getter($scope);
+
             $scope.$watch($attrs.psFormFields, function(options) {
                 if (options) {
 
-                    console.log(options);
+                    angular.forEach($scope.model, function (value, name) {
+                        delete $scope.model[name];
+                    });
 
                     angular.forEach(options, function (option, name) {
                         option.name = name;
                         option.label = option.label || option.name;
                         option.type = option.type || 'text';
+                        option.default = option.default || null;
+
+                        $scope.model[name] = option.default;
                     });
 
                     $scope.options = options;
                 }
             });
+
+
 
         })
         .directive('psFormFields', function () {

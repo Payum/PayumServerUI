@@ -4,14 +4,30 @@
 
     <div class="col-xs-10">
 
+        <input ng-if="option.type == 'text'"
+               type="text"
+               class="form-control"
+               id="field-{{$index}}"
+               placeholder="{{option.label}}"
+               ng-value="option.default"
+               ng-model="model[option.name]" ng-required="option.required">
 
-        <input ng-if="option.type == 'text'" type="text" class="form-control" id="field-{{$index}}" placeholder="{{option.name}}" ng-value="option.default">
-
-        <input ng-if="option.type == 'password'" type="password" class="form-control" id="field-{{$index}}" placeholder="{{option.name}}">
+        <input ng-if="option.type == 'password'"
+               type="password"
+               class="form-control"
+               id="field-{{$index}}"
+               placeholder="{{option.label}}"
+               ng-required="option.required">
 
 
         <div ng-if="option.type == 'checkbox'" class="checkbox" >
-            <label><input type="checkbox" ng-checked="option.default" id="field-{{$index}}"> &nbsp;</label>
+            <label>
+                <input type="checkbox"
+                          ng-checked="option.default"
+                          id="field-{{$index}}"
+                          ng-model="model[option.name]"
+                          ng-required="option.required"> &nbsp;
+            </label>
         </div>
 
 
