@@ -48,15 +48,21 @@ define([
                 options: {}
             });
 
+
+            console.log($scope.payment);
+
             $scope.metasConfig = PaymentConfigMeta.get(function () {
-                $scope.metas = _.toArray($scope.metasConfig.metas);
+                $scope.metaFields = $scope.metasConfig.generic;
+            });
+
+
+            $scope.$watch('payment.factory', function () {
+                $scope.updateForm();
             });
 
 
             $scope.updateForm = function () {
-                $scope.fields = _.find($scope.metas, function (meta) {
-                    return $scope.payment.factory == meta.name;
-                });
+                $scope.fields = $scope.payment.factory && $scope.metasConfig.metas[$scope.payment.factory] ? $scope.metasConfig.metas[$scope.payment.factory].options : [];
             }
 
             $scope.save = function () {

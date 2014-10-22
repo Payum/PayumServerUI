@@ -31,5 +31,16 @@
         </div>
 
 
+        <select ng-if="option.type == 'choice'" id="payments"
+                class="form-control"
+
+                id="field-{{$index}}"
+                ng-model="model[option.name]"
+                ng-required="option.required"
+
+                ng-options="choice.value as choice.label for choice in option.choices">
+            <option value=""></option>
+        </select>
+
     </div>
 </div>

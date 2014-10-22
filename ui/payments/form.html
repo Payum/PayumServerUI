@@ -6,27 +6,9 @@
                 <h2 class="sub-header">New Gateway</h2>
 
                 <form class="form-horizontal" ng-submit="save()">
-                    <div class="form-group">
-                        <label for="name" class="control-label col-xs-2">Name</label>
 
-                        <div class="col-xs-10">
-                            <input type="text" class="form-control" id="name" placeholder="Name"
-                                   ng-model="payment.name" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="payments" class="control-label col-xs-2">Payments</label>
-
-                        <div class="col-xs-10">
-                            <select id="payments" class="form-control" ng-model="payment.factory" ng-change="updateForm()"
-                                    ng-options="meta.name as meta.name for meta in metas" required>
-                                <option value="">---</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div ps-form-fields="fields.options" ng-model="payment.options"></div>
+                    <div ps-form-fields="metaFields" ng-model="payment"></div>
+                    <div ps-form-fields="fields" ng-model="payment.options"></div>
 
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">

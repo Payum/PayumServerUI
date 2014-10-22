@@ -4,16 +4,17 @@ define([], function () {
 
         .controller('psFormFields', function ($scope, $parse, $filter, $attrs) {
 
-            var getter = $parse($attrs.ngModel);
-            $scope.model = getter($scope);
+            $scope.model = $scope.ngModel;
 
             function resetModel() {
                 angular.forEach($scope.model, function (value, name) {
-                    delete $scope.model[name];
+                    if(!angular.isObject(value)) delete $scope.model[name];
                 });
             }
 
-            $scope.$watch($attrs.psFormFields, function (options) {
+            $scope.$watch('psFormFields', function (options) {
+
+
                 if (options) {
 
                     resetModel();
@@ -35,7 +36,7 @@ define([], function () {
                 }
                 else {
                     resetModel();
-                    $scope.options = [];
+//                    $scope.options = [];
                 }
             });
 
@@ -43,8 +44,13 @@ define([], function () {
         })
         .directive('psFormFields', function () {
             return {
-                restrict: 'AE',
+                restrict: 'A',
                 controller: 'psFormFields',
+                scope: {
+                    //@ reads the attribute value, = provides two-way binding, & works with functions
+                    psFormFields: '=',
+                    ngModel: '='
+                },
                 templateUrl: require.toUrl('./directive/ps-form-fields/ps-form-fields.html'),
                 link: new Function()
             };
