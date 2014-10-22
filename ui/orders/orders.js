@@ -37,7 +37,7 @@ define(['./orders.service', 'payments/payments.service'], function () {
             $scope.order = new Order({
                 "paymentName": "",
                 "totalAmount": "",
-                "currenctCode": "USD"
+                "currencyCode": "USD"
             });
 
             $scope.save = function () {
