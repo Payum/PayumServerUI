@@ -1,13 +1,19 @@
 define(['settings/settings.service'], function () {
 
-    angular.module('PS.service.api', ['restangular', 'PS.settings.service'])
+    angular.module('PS.service.api', ['ngResource', 'PS.settings.service'])
 
-        .factory('Api', function (Restangular, Settings) {
+        .config(function ($resourceProvider) {
+            
+        })
+        .factory('Api', function ($resource, $window, Settings) {
 
-            return Restangular.withConfig(function (RestangularConfigurer) {
-//                RestangularConfigurer.setDefaultRequestParams({token: Config.token});
-                RestangularConfigurer.setBaseUrl(Settings.api);
-            });
+            return {
+                resource: function (url) {
+                    var args = _.toArray(arguments);
+                    args[0] = Settings.api + url
+                    return $resource.apply($window, args);
+                }
+            };
 
         })
 });

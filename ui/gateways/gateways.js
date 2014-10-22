@@ -26,58 +26,31 @@ define(['service/api'], function () {
 
         })
 
-        .factory('PaymentMeta', function (Api) {
-
-            return Api.withConfig(function (config) {
-
-                config.addResponseInterceptor(function (res, operation) {
-                    if (operation == 'getList') {
-                        console.log(res);
-                        return _.toArray(res.metas);
-                    }
-                });
-
-            }).all('configs/payments/metas');
+        .factory('PaymentConfigMeta', function (Api) {
+            return Api.resource('/configs/payments/metas');
         })
 
-        .factory('Payment', function (Api) {
-
-            return Api.withConfig(function (config) {
-
-                config.addResponseInterceptor(function (res, operation) {
-                    if (operation == 'getList') {
-                        return _.toArray(res.configs);
-                    }
-                });
-
-            }).all('configs/payments');
+        .factory('PaymentConfig', function (Api) {
+            return Api.resource('/configs/payments');
         })
 
-        .controller('PS.gateways.list', function ($scope, Payment) {
-
-            Payment.getList().then(function (payments) {
-                $scope.payments = payments;
+        .controller('PS.gateways.list', function ($scope, PaymentConfig) {
+            $scope.paymentConfig = PaymentConfig.get(function () {
+                $scope.payments = $scope.paymentConfig.configs;
             });
         })
 
-        .controller('PS.gateways.form', function ($scope, Payment, PaymentMeta) {
+        .controller('PS.gateways.form', function ($scope, PaymentConfig, PaymentConfigMeta) {
 
-            $scope.payment = {};
-
-            PaymentMeta.getList().then(function (metas) {
-                $scope.metas = metas;
+            $scope.payment = new PaymentConfig({
+                name: '',
+                factory: '',
+                options: {}
             });
 
-            $scope.getGenerator = function () {
-
-                if(!$scope.metas) return [];
-
-                var meta = _($scope.metas).find(function (item) {
-                    return item.name == $scope.payment.factory
-                });
-
-                return meta.plain();
-            }
+            $scope.metasConfig = PaymentConfigMeta.get(function () {
+                $scope.metas = _.toArray($scope.metasConfig.metas);
+            });
 
             $scope.save = function () {
                 console.log($scope.payment);
