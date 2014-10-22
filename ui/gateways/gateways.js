@@ -34,13 +34,13 @@ define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
             return Api.resource('/configs/payments');
         })
 
-        .controller('PS.gateways.list', function ($scope, PaymentConfig) {
+        .controller('PS.gateways.list', function ($scope, PaymentConfig, $state) {
             $scope.paymentConfig = PaymentConfig.get(function () {
                 $scope.payments = $scope.paymentConfig.configs;
             });
         })
 
-        .controller('PS.gateways.form', function ($scope, PaymentConfig, PaymentConfigMeta) {
+        .controller('PS.gateways.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state) {
 
             $scope.payment = new PaymentConfig({
                 name: '',
@@ -60,8 +60,9 @@ define(['service/api', 'directive/ps-form-fields/ps-form-fields'], function () {
             }
 
             $scope.save = function () {
-                console.log($scope.payment);
-                $scope.payment.$save();
+                $scope.payment.$save(function () {
+                    $state.go('app.gateways');
+                });
             }
         })
 
