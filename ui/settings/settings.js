@@ -26,6 +26,8 @@ define(['./settings.service'], function () {
                 Settings.check();
             }
 
+            $scope.testUrl();
+
         })
     ;
 
