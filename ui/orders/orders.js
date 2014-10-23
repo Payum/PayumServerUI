@@ -25,6 +25,20 @@ define(['./orders.service', 'payments/payments.service'], function () {
                 }
             });
 
+            $stateProvider.state('app.orders.details', {
+                url: "/details/:orderId",
+                views: {
+                    'main@app': {
+                        templateUrl: require.toUrl('./orders/details.html'),
+                        controller: 'PS.orders.details'
+
+                    }
+                }
+            });
+
+        })
+        .controller('PS.orders.details', function ($scope, OrderService, $stateParams) {
+            $scope.order = OrderService.getByNumber($stateParams.orderId);
         })
         .controller('PS.orders.list', function ($scope, OrderService) {
             $scope.orders = OrderService.getOrders();
