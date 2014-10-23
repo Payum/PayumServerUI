@@ -8,7 +8,8 @@ define(['./orders.service', 'payments/payments.service'], function () {
                 url: "/orders",
                 views: {
                     'main@app': {
-                        templateUrl: require.toUrl('./orders/list.html')
+                        templateUrl: require.toUrl('./orders/list.html'),
+                        controller: 'PS.orders.list'
                     }
                 }
             });
@@ -25,10 +26,10 @@ define(['./orders.service', 'payments/payments.service'], function () {
             });
 
         })
-        .controller('PS.orders.list', function ($scope) {
-
+        .controller('PS.orders.list', function ($scope, OrderService) {
+            $scope.orders = OrderService.getOrders();
         })
-        .controller('PS.orders.form', function ($scope, Order, PaymentConfig) {
+        .controller('PS.orders.form', function ($scope, Order, PaymentConfig, OrderService, $state) {
 
             $scope.paymentConfig = PaymentConfig.get(function () {
                 $scope.payments = _.toArray($scope.paymentConfig.configs);
@@ -42,7 +43,8 @@ define(['./orders.service', 'payments/payments.service'], function () {
 
             $scope.save = function () {
                 $scope.order.$save(function (order, headers) {
-
+                    OrderService.add(order);
+                    $state.go('app.orders');
                 });
             }
         })

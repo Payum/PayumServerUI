@@ -5,7 +5,17 @@ define(['service/api'], function () {
             return Api.resource('/orders');
         })
         .factory('OrderService', function () {
+            return {
+                orders: [],
 
+                add: function (order) {
+                    this.orders.push(order);
+                },
+
+                getOrders: function () {
+                    return this.orders;
+                }
+            }
         })
         ;
 
