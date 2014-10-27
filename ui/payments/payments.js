@@ -34,10 +34,16 @@ define([
 
         })
 
-        .controller('PS.payments.list', function ($scope, PaymentConfig, $state) {
+        .controller('PS.payments.list', function ($scope, PaymentConfig) {
+
             $scope.paymentConfig = PaymentConfig.get(function () {
-                $scope.payments = $scope.paymentConfig.configs;
+                $scope.payments = _.toArray($scope.paymentConfig.payments);
             });
+
+            $scope.remove = function (payment) {
+                $scope.payments.splice($scope.payments.indexOf(payment), 1);
+            }
+
         })
 
         .controller('PS.payments.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state) {
@@ -48,8 +54,6 @@ define([
                 options: {}
             });
 
-
-            console.log($scope.payment);
 
             $scope.metasConfig = PaymentConfigMeta.get(function () {
                 $scope.metaFields = $scope.metasConfig.generic;

@@ -11,6 +11,9 @@ define(['service/api'], function () {
                 add: function (order) {
                     this.orders.push(order);
                 },
+                remove: function (order) {
+                    this.orders.splice(this.orders.indexOf(order), 1);
+                },
 
                 getByNumber: function (number) {
                     return _.find(this.orders, function (order) {

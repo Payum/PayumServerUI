@@ -41,12 +41,18 @@ define(['./orders.service', 'payments/payments.service'], function () {
             $scope.order = OrderService.getByNumber($stateParams.orderId);
         })
         .controller('PS.orders.list', function ($scope, OrderService) {
+
             $scope.orders = OrderService.getOrders();
+
+            $scope.remove = function (order) {
+                OrderService.remove(order);
+            }
+
         })
         .controller('PS.orders.form', function ($scope, Order, PaymentConfig, OrderService, $state) {
 
             $scope.paymentConfig = PaymentConfig.get(function () {
-                $scope.payments = _.toArray($scope.paymentConfig.configs);
+                $scope.payments = _.toArray($scope.paymentConfig.payments);
             });
 
             $scope.order = new Order({
