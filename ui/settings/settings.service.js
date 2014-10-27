@@ -27,6 +27,11 @@ define([], function () {
                                 reject();
                             });
                     })
+                },
+                toJSON: function () {
+                    return {
+                        api: this.api
+                    }
                 }
             };
 

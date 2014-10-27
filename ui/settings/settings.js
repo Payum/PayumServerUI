@@ -14,8 +14,10 @@ define(['./settings.service'], function () {
                 }
             });
         })
-        .controller('PS.settings', function ($scope, Settings, $state, $http) {
+        .controller('PS.settings', function ($scope, Settings, $state, $location) {
+
             $scope.settings = Settings;
+            Settings.save($location.search());
 
             $scope.save = function (settings) {
                 Settings.save(settings);
@@ -23,10 +25,13 @@ define(['./settings.service'], function () {
             }
 
             $scope.testUrl = function () {
+                $location.search($scope.settings.toJSON());
                 Settings.check();
             }
 
             $scope.testUrl();
+
+
 
         })
     ;
