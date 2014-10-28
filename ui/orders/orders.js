@@ -41,10 +41,21 @@ define([
             });
 
         })
-        .controller('PS.orders.details', function ($scope, OrderService, $stateParams) {
+        .controller('PS.orders.details', function ($scope, OrderService, $stateParams, $state) {
             OrderService.getById($stateParams.orderId).then(function (order) {
                 $scope.order = order;
             });
+
+            $scope.sync = function (order) {
+                OrderService.sync(order);
+            }
+
+            $scope.remove = function (order) {
+                OrderService.remove(order).then(function () {
+                    $state.go('app.orders');
+                });
+            }
+
         })
         .controller('PS.orders.list', function ($scope, OrderService) {
 

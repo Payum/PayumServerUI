@@ -17,9 +17,14 @@ define(['service/api'], function () {
                 remove: function (order) {
                     var self = this;
 
-                    Order.delete({orderId: order.id}, function () {
-                        self.orders.splice(self.orders.indexOf(order), 1);
+                    return $q(function (resolve, reject) {
+
+                        Order.delete({orderId: order.id}, function () {
+                            self.orders.splice(self.orders.indexOf(order), 1);
+                            resolve(order);
+                        }, reject);
                     });
+
                 },
                 removeAll: function () {
                     this.orders.splice(0, this.orders.length);
@@ -29,14 +34,12 @@ define(['service/api'], function () {
                     return $q(function (resolve, reject) {
                         Order.get({orderId: orderId}, function (order) {
                             resolve(order.order);
-                        }, function () {
-                            reject();
-                        })
+                        }, reject)
                     });
                 },
                 sync: function (order) {
                     var self = this;
-                    this.getById(order.id).then(function (newOrder) {
+                    return this.getById(order.id).then(function (newOrder) {
                         self.replace(order, newOrder)
                     });
                 },
