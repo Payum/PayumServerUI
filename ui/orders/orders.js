@@ -1,10 +1,11 @@
 define([
     './orders.service',
     'payments/payments.service',
+    'filter/ntext',
     'directive/ps-form-fields/ps-form-fields'
 ], function () {
 
-    angular.module('PS.orders', ['ui.router', 'PS.orders.service', 'PS.payments.service'])
+    angular.module('PS.orders', ['ui.router', 'PS.orders.service', 'PS.payments.service', 'ntext'])
 
         .config(function ($stateProvider) {
 
@@ -84,9 +85,22 @@ define([
             $scope.order = new Order();
 
             $scope.save = function () {
+
+                $scope.error = '';
+
                 $scope.order.$save(function (order) {
                     OrderService.add(order.order);
                     $state.go('app.orders');
+                }, function (res) {
+                    $scope.error = 'Invalid form';
+
+                    if (res.data.errors) {
+                        $scope.error = res.data.errors;
+                    }
+
+                    if (res.data.message) {
+                        $scope.error = res.data.message;
+                    }
                 });
             }
         })

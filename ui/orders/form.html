@@ -6,7 +6,9 @@
 
                 <h2 class="sub-header">New Order</h2>
 
-                <form class="form-horizontal" ng-submit="save()">
+                <div ng-if="error" class="alert alert-danger" role="alert" ng-bind-html="error | ntext"></div>
+
+                <form class="form-horizontal" ng-submit="save()" ng-class="{'has-error': !!error}">
 
                     <div ps-form-fields="meta" ng-model="order"></div>
 

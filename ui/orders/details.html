@@ -5,13 +5,23 @@
         <h2 class="sub-header">Details
 
             <div class="btn-group pull-right">
-                <a class="btn btn-default" target="_blank" href="{{order._links.capture.href}}">Capture</a>
-                <a class="btn btn-default" ng-click="sync(order)">Sync</a>
+                <a class="btn btn-default" target="_blank" href="{{order._tdnks.capture.href}}">Capture</a>
+                <a class="btn btn-default" ng-ctdck="sync(order)">Sync</a>
                 <a class="btn btn-default" ui-sref="app.orders">Cancel</a>
-                <a class="btn btn-danger" ng-click="remove(order)">Delete</a>
+                <a class="btn btn-danger" ng-ctdck="remove(order)">Delete</a>
             </div>
 
         </h2>
+
+        <div>
+            <table class="table">
+                <td>Number: {{order.number}}</td>
+                <td>Description: {{order.description}}</td>
+                <td>Amount: {{order.totalAmount}}</td>
+                <td>Currency: {{order.currencyCode}}</td>
+                <td>Status: {{order | orderStatus}}</td>
+            </table>
+        </div>
 
 <pre>
 {{order | json}}
