@@ -43,6 +43,7 @@ define([
 
         })
         .controller('PS.orders.details', function ($scope, OrderService, $stateParams, $state) {
+
             OrderService.getById($stateParams.orderId).then(function (order) {
                 $scope.order = order;
             });

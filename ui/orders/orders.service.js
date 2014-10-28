@@ -49,6 +49,8 @@ define(['service/api'], function () {
                 },
                 getOrderStatus: function (order) {
 
+                    if(!order) return '';
+
                     var payment = _(order.payments).sortBy(function (payment) {
                         return payment.date;
                     }).first();
