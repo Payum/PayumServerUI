@@ -7,7 +7,7 @@ define(['service/api'], function () {
         })
 
         .factory('PaymentConfig', function (Api) {
-            return Api.resource('/configs/payments');
+            return Api.resource('/configs/payments/:name', {'name': '@name'});
         })
     ;
 

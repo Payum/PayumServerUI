@@ -41,7 +41,13 @@ define([
             });
 
             $scope.remove = function (payment) {
-                $scope.payments.splice($scope.payments.indexOf(payment), 1);
+
+                var payment = new PaymentConfig(payment);
+
+                payment.$delete(function () {
+                    $scope.payments.splice($scope.payments.indexOf(payment), 1);
+                });
+
             }
 
         })
