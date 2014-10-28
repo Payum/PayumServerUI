@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-md-12">
 
@@ -19,24 +18,17 @@
                 <tr ng-repeat="payment in payments">
                     <td>{{payment.name}}</td>
                     <td>{{payment.factory}}</td>
-                    <td>{{payment.options}}</td>
                     <td>
-                        <div class="btn-group hidden-xs">
-                            <!--<button type="button" class="btn btn-xs btn-default">Edit</button>-->
+                        <ul class="list-inline">
+                            <li ng-repeat="(name, value) in payment.options">
+                                {{name}}: {{value}}
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="btn-group">
                             <button class="btn btn-xs btn-danger" ng-click="remove(payment)">Delete</button>
                         </div>
-
-                        <div class="btn-group btn-group-xs visible-xs">
-                            <button type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Delete</a></li>
-                            </ul>
-                        </div>
-
                     </td>
                 </tr>
                 </tbody>
