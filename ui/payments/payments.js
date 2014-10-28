@@ -1,5 +1,6 @@
 define([
     'directive/ps-form-fields/ps-form-fields',
+    'filter/ntext',
     './payments.service'
 ], function () {
 
@@ -7,7 +8,8 @@ define([
             'ui.router',
             'PS.service.api',
             'PS.directive.ps-form-fields',
-            'PS.payments.service'
+            'PS.payments.service',
+            'ntext'
         ])
 
         .config(function ($stateProvider) {
@@ -50,7 +52,9 @@ define([
 
         })
 
-        .controller('PS.payments.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state) {
+        .controller('PS.payments.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state, $sce) {
+
+            $scope.error = '';
 
             $scope.payment = new PaymentConfig({
                 name: '',
@@ -74,12 +78,24 @@ define([
             }
 
             $scope.save = function () {
+
+                $scope.error = '';
+
                 $scope.payment.$save(function () {
                     $state.go('app.payments');
+                }, function (res) {
+                    $scope.error = 'Invalid form';
+
+                    if (res.data.errors) {
+                        $scope.error = res.data.errors;
+                    }
+
+                    if (res.data.message) {
+                        $scope.error = res.data.message;
+                    }
                 });
             }
         })
-
     ;
 
 });
