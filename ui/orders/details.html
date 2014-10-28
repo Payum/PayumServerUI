@@ -7,6 +7,7 @@
             <div class="btn-group pull-right">
                 <a class="btn btn-default" target="_blank" href="{{order._links.capture.href}}">Capture</a>
                 <a class="btn btn-default" ng-click="sync(order)">Sync</a>
+                <a class="btn btn-default" ui-sref="app.orders.edit({orderId: order.id})">Edit</a>
                 <a class="btn btn-default" ui-sref="app.orders">Cancel</a>
                 <a class="btn btn-danger" ng-click="remove(order)">Delete</a>
             </div>

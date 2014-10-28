@@ -5,12 +5,19 @@ define([], function () {
         .controller('psFormFields', function ($scope, $parse, $filter, $attrs) {
 
             $scope.model = $scope.ngModel;
+            $scope.shouldReset = $scope.psFormFieldsReset;
 
             function resetModel() {
-                angular.forEach($scope.model, function (value, name) {
-                    if(!angular.isObject(value)) delete $scope.model[name];
-                });
+                if ($scope.shouldReset) {
+                    angular.forEach($scope.model, function (value, name) {
+                        if (!angular.isObject(value)) delete $scope.model[name];
+                    });
+                }
             }
+
+            $scope.$watch('ngModel', function (model) {
+                $scope.model = model;
+            });
 
             $scope.$watch('psFormFields', function (options) {
 
@@ -27,7 +34,7 @@ define([], function () {
                         option.type = option.type || 'text';
                         option.default = option.default || null;
 
-                        $scope.model[name] = option.default;
+                        $scope.model[name] = $scope.model[name] || option.default;
 
                         aOptions.push(option);
                     });
@@ -48,6 +55,7 @@ define([], function () {
                 controller: 'psFormFields',
                 scope: {
                     //@ reads the attribute value, = provides two-way binding, & works with functions
+                    psFormFieldsReset: '=',
                     psFormFields: '=',
                     ngModel: '='
                 },

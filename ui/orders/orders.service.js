@@ -53,7 +53,7 @@ define(['service/api'], function () {
 
                     var payment = _(order.payments).sortBy(function (payment) {
                         return payment.date;
-                    }).first();
+                    }).last();
 
 
                     if (payment) {

@@ -30,6 +30,7 @@
                             <a class="btn btn-xs btn-default" target="_blank" href="{{order._links.capture.href}}">Capture</a>
                             <a class="btn btn-xs btn-default" ng-click="sync(order)">Sync</a>
                             <a class="btn btn-xs btn-default" ui-sref="app.orders.details({orderId: order.id})">Details</a>
+                            <a class="btn btn-xs btn-default" ui-sref="app.orders.edit({orderId: order.id})">Edit</a>
                             <a class="btn btn-xs btn-danger" ng-click="remove(order)">Delete</a>
                         </div>
                     </td>

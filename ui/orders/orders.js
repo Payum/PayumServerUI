@@ -41,6 +41,16 @@ define([
                 }
             });
 
+            $stateProvider.state('app.orders.edit', {
+                url: "/edit/:orderId",
+                views: {
+                    'main@app': {
+                        templateUrl: require.toUrl('./orders/form.html'),
+                        controller: 'PS.orders.form'
+                    }
+                }
+            });
+
         })
         .controller('PS.orders.details', function ($scope, OrderService, $stateParams, $state) {
 
@@ -83,7 +93,15 @@ define([
                 $scope.meta = $scope.orderMeta.meta;
             });
 
-            $scope.order = new Order();
+            if ($state.params.orderId) {
+                OrderService.getById($state.params.orderId).then(function (order) {
+                    $scope.order = new Order(order);
+                });
+            }
+            else {
+                $scope.order = new Order();
+            }
+
 
             $scope.save = function () {
 
