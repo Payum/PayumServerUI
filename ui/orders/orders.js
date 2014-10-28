@@ -42,7 +42,9 @@ define([
 
         })
         .controller('PS.orders.details', function ($scope, OrderService, $stateParams) {
-            $scope.order = OrderService.getByNumber($stateParams.orderId);
+            OrderService.getById($stateParams.orderId).then(function (order) {
+                $scope.order = order;
+            });
         })
         .controller('PS.orders.list', function ($scope, OrderService) {
 
@@ -64,17 +66,19 @@ define([
                 $scope.meta = $scope.orderMeta.meta;
             });
 
-            $scope.order = new Order({
-                "paymentName": "",
-                "totalAmount": "",
-                "currencyCode": "USD"
-            });
+            $scope.order = new Order();
 
             $scope.save = function () {
-                $scope.order.$save(function (order, headers) {
-                    OrderService.add(order);
+                $scope.order.$save(function (order) {
+                    OrderService.add(order.order);
                     $state.go('app.orders');
                 });
+            }
+        })
+
+        .filter('orderStatus', function (OrderService) {
+            return function (order) {
+                return OrderService.getOrderStatus(order);
             }
         })
 
