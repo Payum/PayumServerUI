@@ -7,32 +7,9 @@
                 <h2 class="sub-header">New Order</h2>
 
                 <form class="form-horizontal" ng-submit="save()">
-                    <div class="form-group">
-                        <label for="payments" class="control-label col-xs-2">Payment</label>
 
-                        <div class="col-xs-10">
-                            <select id="payments" class="form-control" ng-model="order.paymentName"
-                                    ng-options="payment.name as payment.name for payment in payments" required>
-                                <option value="">---</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="totalAmount" class="control-label col-xs-2">Amount</label>
+                    <div ps-form-fields="meta" ng-model="order"></div>
 
-                        <div class="col-xs-10">
-                            <input type="text" class="form-control" id="totalAmount" placeholder="Amount"
-                                   ng-model="order.totalAmount" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="currencyCode" class="control-label col-xs-2">Currency</label>
-
-                        <div class="col-xs-10">
-                            <input type="text" class="form-control" id="currencyCode" placeholder="USD"
-                                   ng-model="order.currencyCode" required>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
                             <button type="submit" class="btn btn-primary">Create</button>

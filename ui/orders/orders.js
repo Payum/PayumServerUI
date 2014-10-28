@@ -1,4 +1,8 @@
-define(['./orders.service', 'payments/payments.service'], function () {
+define([
+    './orders.service',
+    'payments/payments.service',
+    'directive/ps-form-fields/ps-form-fields'
+], function () {
 
     angular.module('PS.orders', ['ui.router', 'PS.orders.service', 'PS.payments.service'])
 
@@ -49,10 +53,15 @@ define(['./orders.service', 'payments/payments.service'], function () {
             }
 
         })
-        .controller('PS.orders.form', function ($scope, Order, PaymentConfig, OrderService, $state) {
+        .controller('PS.orders.form', function ($scope, Order, PaymentConfig, OrderService, $state, OrderMeta) {
 
             $scope.paymentConfig = PaymentConfig.get(function () {
                 $scope.payments = _.toArray($scope.paymentConfig.payments);
+            });
+
+
+            $scope.orderMeta = OrderMeta.get(function () {
+                $scope.meta = $scope.orderMeta.meta;
             });
 
             $scope.order = new Order({

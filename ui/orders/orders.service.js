@@ -4,6 +4,9 @@ define(['service/api'], function () {
         .factory('Order', function (Api) {
             return Api.resource('/orders');
         })
+        .factory('OrderMeta', function (Api) {
+            return Api.resource('/orders/meta');
+        })
         .factory('OrderService', function () {
             return {
                 orders: [],

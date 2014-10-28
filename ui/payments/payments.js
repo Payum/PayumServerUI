@@ -42,9 +42,7 @@ define([
 
             $scope.remove = function (payment) {
 
-                var payment = new PaymentConfig(payment);
-
-                payment.$delete(function () {
+                PaymentConfig.delete({name: payment.name}, function () {
                     $scope.payments.splice($scope.payments.indexOf(payment), 1);
                 });
 
