@@ -50,6 +50,10 @@ define([
 
             $scope.orders = OrderService.getOrders();
 
+            $scope.sync = function (order) {
+                OrderService.sync(order);
+            }
+
             $scope.remove = function (order) {
                 OrderService.remove(order);
             }

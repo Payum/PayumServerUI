@@ -11,6 +11,7 @@
                 <thead>
                 <tr>
                     <th>Number</th>
+                    <th>Description</th>
                     <th>Amount</th>
                     <th>Currency</th>
                     <th>Status</th>
@@ -20,6 +21,7 @@
                 <tbody>
                 <tr ng-repeat="order in orders">
                     <td>{{order.number}}</td>
+                    <td>{{order.description}}</td>
                     <td>{{order.totalAmount}}</td>
                     <td>{{order.currencyCode}}</td>
                     <td>{{order | orderStatus}}</td>
@@ -34,11 +36,12 @@
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li ng-repeat="(name, link) in order._links" >
-                                        <a target="_blank" href="{{link}}">{{name}}</a>
+                                        <a target="_blank" href="{{link.href}}">{{name}}</a>
                                     </li>
                                 </ul>
                             </div>
 
+                            <a class="btn btn-xs btn-default" ng-click="sync(order)">Sync</a>
                             <a class="btn btn-xs btn-default" ui-sref="app.orders.details({orderId: order.id})">Details</a>
                             <a class="btn btn-xs btn-danger" ng-click="remove(order)">Delete</a>
 

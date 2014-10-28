@@ -15,7 +15,11 @@ define(['service/api'], function () {
                     this.orders.push(order);
                 },
                 remove: function (order) {
-                    this.orders.splice(this.orders.indexOf(order), 1);
+                    var self = this;
+
+                    Order.delete({orderId: order.id}, function () {
+                        self.orders.splice(self.orders.indexOf(order), 1);
+                    });
                 },
                 removeAll: function () {
                     this.orders.splice(0, this.orders.length);
@@ -29,6 +33,16 @@ define(['service/api'], function () {
                             reject();
                         })
                     });
+                },
+                sync: function (order) {
+                    var self = this;
+                    this.getById(order.id).then(function (newOrder) {
+                        self.replace(order, newOrder)
+                    });
+                },
+                replace: function (order, newOrder) {
+                    var idx = this.orders.indexOf(order);
+                    this.orders[idx] = newOrder;
                 },
                 getOrderStatus: function (order) {
 
