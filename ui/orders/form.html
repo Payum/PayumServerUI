@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-md-8">
 
-                <h2 ng-if="!order.id" class="sub-header">New Order</h2>
-                <h2 ng-if="order.id" class="sub-header">Edit Order</h2>
+                <h2 ng-if="order && !order.id" class="sub-header">New Order</h2>
+                <h2 ng-if="order && order.id" class="sub-header">Edit Order</h2>
 
                 <div ng-if="error" class="alert alert-danger" role="alert" ng-bind-html="error | ntext"></div>
 

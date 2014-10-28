@@ -107,8 +107,7 @@ define([
 
                 $scope.error = '';
 
-                $scope.order.$save(function (order) {
-                    OrderService.add(order.order);
+                OrderService.save($scope.order).then(function () {
                     $state.go('app.orders');
                 }, function (res) {
                     $scope.error = 'Invalid form';
@@ -121,6 +120,7 @@ define([
                         $scope.error = res.data.message;
                     }
                 });
+
             }
         })
 

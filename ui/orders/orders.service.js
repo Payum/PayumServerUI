@@ -2,7 +2,9 @@ define(['service/api'], function () {
 
     angular.module('PS.orders.service', ['PS.service.api'])
         .factory('Order', function (Api) {
-            return Api.resource('/orders/:orderId');
+            return Api.resource('/orders/:orderId', null, {
+                'update': { method:'PUT' }
+            });
         })
         .factory('OrderMeta', function (Api) {
             return Api.resource('/orders/meta');
@@ -60,6 +62,28 @@ define(['service/api'], function () {
                         return payment.status;
                     }
 
+                },
+                save: function (order) {
+
+                    var self = this;
+
+                    return $q(function (resolve, reject) {
+
+                        if(order.id){
+                            //update
+                            Order.update({orderId: order.id}, order, function (order) {
+                                resolve(order.order);
+                            }, reject)
+                        }
+                        else
+                        {
+                            //create
+                            Order.save(order, function (order) {
+                                resolve(order.order);
+                            }, reject)
+                        }
+
+                    });
                 },
                 getOrders: function () {
 
