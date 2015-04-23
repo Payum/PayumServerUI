@@ -1,16 +1,11 @@
 define([
-    'directive/ps-form-fields/ps-form-fields',
+    './payments.service',
+    'gateways/gateways.service',
     'filter/ntext',
-    './payments.service'
+    'directive/ps-form-fields/ps-form-fields'
 ], function () {
 
-    angular.module('PS.payments', [
-            'ui.router',
-            'PS.service.api',
-            'PS.directive.ps-form-fields',
-            'PS.payments.service',
-            'ntext'
-        ])
+    angular.module('PS.payments', ['ui.router', 'PS.payments.service', 'PS.gateways.service', 'ntext'])
 
         .config(function ($stateProvider) {
 
@@ -30,58 +25,89 @@ define([
                     'main@app': {
                         templateUrl: require.toUrl('./payments/form.html'),
                         controller: 'PS.payments.form'
+
+                    }
+                }
+            });
+
+            $stateProvider.state('app.payments.details', {
+                url: "/details/:paymentId",
+                views: {
+                    'main@app': {
+                        templateUrl: require.toUrl('./payments/details.html'),
+                        controller: 'PS.payments.details'
+
+                    }
+                }
+            });
+
+            $stateProvider.state('app.payments.edit', {
+                url: "/edit/:paymentId",
+                views: {
+                    'main@app': {
+                        templateUrl: require.toUrl('./payments/form.html'),
+                        controller: 'PS.payments.form'
                     }
                 }
             });
 
         })
+        .controller('PS.payments.details', function ($scope, PaymentService, $stateParams, $state) {
 
-        .controller('PS.payments.list', function ($scope, PaymentConfig) {
-
-            $scope.paymentConfig = PaymentConfig.get(function () {
-                $scope.payments = _.toArray($scope.paymentConfig.payments);
+            PaymentService.getById($stateParams.paymentId).then(function (payment) {
+                $scope.payment = payment;
             });
 
+            $scope.sync = function (payment) {
+                PaymentService.sync(payment);
+            }
+
             $scope.remove = function (payment) {
-
-                PaymentConfig.delete({name: payment.name}, function () {
-                    $scope.payments.splice($scope.payments.indexOf(payment), 1);
+                PaymentService.remove(payment).then(function () {
+                    $state.go('app.payments');
                 });
-
             }
 
         })
+        .controller('PS.payments.list', function ($scope, PaymentService) {
 
-        .controller('PS.payments.form', function ($scope, PaymentConfig, PaymentConfigMeta, $state, $sce) {
+            $scope.payments = PaymentService.getPayments();
 
-            $scope.error = '';
-
-            $scope.payment = new PaymentConfig({
-                name: '',
-                factory: '',
-                options: {}
-            });
-
-
-            $scope.metasConfig = PaymentConfigMeta.get(function () {
-                $scope.metaFields = $scope.metasConfig.generic;
-            });
-
-
-            $scope.$watch('payment.factory', function () {
-                $scope.updateForm();
-            });
-
-
-            $scope.updateForm = function () {
-                $scope.fields = $scope.payment.factory && $scope.metasConfig.metas[$scope.payment.factory] ? $scope.metasConfig.metas[$scope.payment.factory].options : [];
+            $scope.sync = function (payment) {
+                PaymentService.sync(payment);
             }
+
+            $scope.remove = function (payment) {
+                PaymentService.remove(payment);
+            }
+
+        })
+        .controller('PS.payments.form', function ($scope, Payment, Gateway, PaymentService, $state, PaymentMeta) {
+
+            $scope.gateway = Gateway.get(function () {
+                $scope.gateways = _.toArray($scope.gateway.gateways);
+            });
+
+
+            $scope.paymentMeta = PaymentMeta.get(function () {
+                $scope.meta = $scope.paymentMeta.meta;
+            });
+
+            if ($state.params.paymentId) {
+                PaymentService.getById($state.params.paymentId).then(function (payment) {
+                    $scope.payment = new Payment(payment);
+                });
+            }
+            else {
+                $scope.payment = new Payment();
+            }
+
 
             $scope.save = function () {
 
                 $scope.error = '';
 
-                $scope.payment.$save(function () {
+                PaymentService.save($scope.payment).then(function () {
                     $state.go('app.payments');
                 }, function (res) {
                     $scope.error = 'Invalid form';
@@ -94,8 +120,17 @@ define([
                         $scope.error = res.data.message;
                     }
                 });
+
             }
         })
+
+        .filter('paymentStatus', function (PaymentService) {
+            return function (payment) {
+                return PaymentService.getPaymentStatus(payment);
+            }
+        })
+
     ;
 
 });
+

@@ -1,0 +1,33 @@
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h2 class="sub-header">Details
+
+            <div class="btn-group pull-right">
+                <a class="btn btn-default" target="_blank" href="{{payment._links.capture.href}}">Capture</a>
+                <a class="btn btn-default" ng-click="sync(payment)">Sync</a>
+                <a class="btn btn-default" ui-sref="app.payments.edit({paymentId: payment.id})">Edit</a>
+                <a class="btn btn-default" ui-sref="app.payments">Cancel</a>
+                <a class="btn btn-danger" ng-click="remove(payment)">Delete</a>
+            </div>
+
+        </h2>
+
+        <div>
+            <table class="table">
+                <td>Number: {{payment.number}}</td>
+                <td>Description: {{payment.description}}</td>
+                <td>Amount: {{payment.totalAmount}}</td>
+                <td>Currency: {{payment.currencyCode}}</td>
+                <td>Status: {{payment | paymentStatus}}</td>
+            </table>
+        </div>
+
+<pre>
+{{payment | json}}
+</pre>
+
+    </div>
+
+</div>

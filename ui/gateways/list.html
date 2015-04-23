@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-12">
+
+        <h2 class="sub-header">Gateways
+            <button type="button" class="btn btn-success pull-right" ui-sref="app.gateways.new">Add new</button>
+        </h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Factory</th>
+                    <th>Config</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="gateway in gateways">
+                    <td>{{gateway.gatewayName}}</td>
+                    <td>{{gateway.factoryName}}</td>
+                    <td>
+                        <ul class="list-inline">
+                            <li ng-repeat="(name, value) in gateway.config">
+                                {{name}}: {{value}}
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-xs btn-danger" ng-click="remove(gateway)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+
+</div>

@@ -1,40 +1,45 @@
+
 <div class="row">
     <div class="col-md-12">
 
         <h2 class="sub-header">Payments
             <button type="button" class="btn btn-success pull-right" ui-sref="app.payments.new">Add new</button>
         </h2>
+
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Factory</th>
-                    <th>Options</th>
+                    <th>Number</th>
+                    <th>Gateway</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Currency</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="payment in payments">
-                    <td>{{payment.name}}</td>
-                    <td>{{payment.factory}}</td>
-                    <td>
-                        <ul class="list-inline">
-                            <li ng-repeat="(name, value) in payment.options">
-                                {{name}}: {{value}}
-                            </li>
-                        </ul>
-                    </td>
+                    <td>{{payment.number}}</td>
+                    <td>{{payment.gatewayName}}</td>
+                    <td>{{payment.description}}</td>
+                    <td>{{payment.totalAmount}}</td>
+                    <td>{{payment.currencyCode}}</td>
+                    <td>{{payment | paymentStatus}}</td>
                     <td>
                         <div class="btn-group">
-                            <button class="btn btn-xs btn-danger" ng-click="remove(payment)">Delete</button>
+                            <a class="btn btn-xs btn-default" target="_blank" href="{{payment._links.capture.href}}">Capture</a>
+                            <a class="btn btn-xs btn-default" ng-click="sync(payment)">Sync</a>
+                            <a class="btn btn-xs btn-default" ui-sref="app.payments.details({paymentId: payment.id})">Details</a>
+                            <a class="btn btn-xs btn-default" ui-sref="app.payments.edit({paymentId: payment.id})">Edit</a>
+                            <a class="btn btn-xs btn-danger" ng-click="remove(payment)">Delete</a>
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
 
     </div>
 

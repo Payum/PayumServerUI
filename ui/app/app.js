@@ -1,15 +1,15 @@
 define(
     [
+        'gateways/gateways',
         'payments/payments',
-        'orders/orders',
         'storages/storages',
         'settings/settings'
     ], function () {
 
         angular.module('PS.app', [
                 'ui.router',
+                'PS.gateways',
                 'PS.payments',
-                'PS.orders',
                 'PS.storages',
                 'PS.settings'
             ])
@@ -18,12 +18,12 @@ define(
 
                 return [
                     {
-                        name: 'Orders',
-                        state: 'app.orders'
-                    },
-                    {
                         name: 'Payments',
                         state: 'app.payments'
+                    },
+                    {
+                        name: 'Gateways',
+                        state: 'app.gateways'
                     },
                     {
                         name: 'Settings',
@@ -49,7 +49,7 @@ define(
 
                 Settings.check().then(function () {
                     if ($state.is('app')) {
-                        $state.go('app.payments');
+                        $state.go('app.gateways');
                     }
                 }, function () {
                     $state.go('app.settings');

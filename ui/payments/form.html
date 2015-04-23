@@ -1,24 +1,27 @@
+
 <div class="row">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-8">
 
-                <h2 class="sub-header">New Payment</h2>
+                <h2 ng-if="payment && !payment.id" class="sub-header">New Payment</h2>
+                <h2 ng-if="payment && payment.id" class="sub-header">Edit Payment</h2>
 
                 <div ng-if="error" class="alert alert-danger" role="alert" ng-bind-html="error | ntext"></div>
 
                 <form class="form-horizontal" ng-submit="save()" ng-class="{'has-error': !!error}">
 
-                    <div ps-form-fields="metaFields" ng-model="payment"></div>
-                    <div ps-form-fields="fields" ps-form-fields-reset="true" ng-model="payment.options"></div>
+                    <div ng-if="payment" ps-form-fields="meta" ng-model="payment"></div>
 
                     <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Create</button>
-                            <a class="btn btn-default" ui-sref="app.payments">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-default" ui-sref="app.payments">Cancel</button>
                         </div>
                     </div>
                 </form>
+
+
             </div>
         </div>
 

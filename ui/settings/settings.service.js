@@ -17,7 +17,7 @@ define([], function () {
                 check: function () {
 
                     return $q(function (resolve, reject) {
-                        $http.get(Settings.api + '/configs/payments').
+                        $http.get(Settings.api).
                             success(function () {
                                 Settings.apiHealth = true;
                                 resolve();

@@ -21,7 +21,6 @@ define([], function () {
 
             $scope.$watch('psFormFields', function (options) {
 
-
                 if (options) {
 
                     resetModel();

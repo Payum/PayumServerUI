@@ -21,7 +21,7 @@ define(['./settings.service'], function () {
 
             $scope.save = function (settings) {
                 Settings.save(settings);
-                $state.go('app.payments');
+                $state.go('app.gateways');
             }
 
             $scope.testUrl = function () {
