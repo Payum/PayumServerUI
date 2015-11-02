@@ -26,7 +26,7 @@
                     <td>{{payment.description}}</td>
                     <td>{{payment.totalAmount}}</td>
                     <td>{{payment.currencyCode}}</td>
-                    <td>{{payment | paymentStatus}}</td>
+                    <td>{{payment.status}}</td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-xs btn-default" target="_blank" href="{{payment._links.capture.href}}">Capture</a>

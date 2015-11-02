@@ -49,10 +49,6 @@ define(['service/api'], function () {
                     var idx = this.payments.indexOf(payment);
                     this.payments[idx] = newPayment;
                 },
-                getPaymentStatus: function (payment) {
-
-                    return '';
-                },
                 save: function (payment) {
 
                     var self = this;
