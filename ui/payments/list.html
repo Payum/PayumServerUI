@@ -29,7 +29,7 @@
                     <td>{{payment.status}}</td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-xs btn-default" target="_blank" href="{{payment._links.capture.href}}">Capture</a>
+                            <a class="btn btn-xs btn-default" ui-sref="app.payments.capture({paymentId: payment.id})">Capture</a>
                             <a class="btn btn-xs btn-default" ng-click="sync(payment)">Sync</a>
                             <a class="btn btn-xs btn-default" ui-sref="app.payments.details({paymentId: payment.id})">Details</a>
                             <a class="btn btn-xs btn-default" ui-sref="app.payments.edit({paymentId: payment.id})">Edit</a>

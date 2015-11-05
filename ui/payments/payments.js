@@ -41,6 +41,17 @@ define([
                 }
             });
 
+            $stateProvider.state('app.payments.capture', {
+                url: "/capture/:paymentId",
+                views: {
+                    'main@app': {
+                        templateUrl: require.toUrl('./payments/capture.html'),
+                        controller: 'PS.payments.capture'
+
+                    }
+                }
+            });
+
             $stateProvider.state('app.payments.edit', {
                 url: "/edit/:paymentId",
                 views: {
@@ -68,6 +79,25 @@ define([
                 });
             }
 
+        })
+        .controller('PS.payments.capture', function ($scope, PaymentService, $stateParams, $state) {
+
+            PaymentService.getById($stateParams.paymentId).then(function (payment) {
+                $scope.payment = payment;
+
+                var payumServerUrl = "http://"+window.location.hostname;
+                payum = new Payum(payumServerUrl);
+
+                var afterUrl = 'http://dev.payum-server.com/client/index.html#/app/payments/details/'+$scope.payment.id;
+
+                payum.token.create('capture', $scope.payment.id, afterUrl, function(token) {
+                    $scope.token = token;
+                });
+            });
+
+            $scope.execute = function() {
+                payum.execute($scope.token.targetUrl, '#payum-container');
+            }
         })
         .controller('PS.payments.list', function ($scope, PaymentService) {
 
