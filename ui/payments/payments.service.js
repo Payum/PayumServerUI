@@ -3,7 +3,8 @@ define(['service/api'], function () {
     angular.module('PS.payments.service', ['PS.service.api'])
         .factory('Payment', function (Api) {
             return Api.resource('/payments/:paymentId', null, {
-                'update': { method:'PUT' }
+                'update': { method:'PUT' },
+                'save': {method: 'POST', url: '/payments/'}
             });
         })
         .factory('PaymentMeta', function (Api) {
