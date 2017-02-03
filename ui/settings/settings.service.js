@@ -10,6 +10,10 @@ define([], function () {
                 apiHealth: false,
 
                 save: function (settings) {
+                    if (settings.api) {
+                        settings.api = settings.api.replace(/\/$/, "");
+                    }
+
                     angular.extend(this, settings);
                     $cookieStore.put('api', this.api);
                 },
