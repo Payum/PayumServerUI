@@ -9,7 +9,7 @@ define(['settings/settings.service'], function () {
             return {
                 resource: function (url) {
                     var args = _.toArray(arguments);
-                    args[0] = Settings.api + url
+                    args[0] = Settings.api + url;
                     return $resource.apply($window, args);
                 }
             };
