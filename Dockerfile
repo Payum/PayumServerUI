@@ -1,4 +1,4 @@
-FROM nginx:1-alpine
+FROM nginx:1
 
 MAINTAINER Maksym Kotliar <kotlyar.maksim@gmail.com>
 
