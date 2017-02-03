@@ -99,9 +99,14 @@ define([
                 var payumServerUrl = "http://"+window.location.hostname;
                 payum = new Payum(payumServerUrl);
 
-                var afterUrl = payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id;
+                $scope.token = {
+                    type: 'capture',
+                    paymentId: $scope.payment.id,
+                    afterUrl: payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id,
+                    targetUrl: ''
+                };
 
-                payum.token.create('capture', $scope.payment.id, afterUrl, function(token) {
+                payum.token.create($scope.token, function(token) {
                     $scope.token = token;
                 });
             });
@@ -118,9 +123,14 @@ define([
                 var payumServerUrl = "http://"+window.location.hostname;
                 payum = new Payum(payumServerUrl);
 
-                var afterUrl = payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id;
+                $scope.token = {
+                    type: 'authorize',
+                    paymentId: $scope.payment.id,
+                    afterUrl: payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id,
+                    targetUrl: ''
+                };
 
-                payum.token.create('authorize', $scope.payment.id, afterUrl, function(token) {
+                payum.token.create($scope.token, function(token) {
                     $scope.token = token;
                 });
             });
