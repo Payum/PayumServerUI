@@ -3,6 +3,8 @@
 if [ "$BRANCH" == "master" ]; then
     echo "Building latest";
 
+    wget https://raw.githubusercontent.com/Payum/PayumServer/master/web/payum.js
+
     export REPO=payum/server-ui
     export TAG="latest";
 
