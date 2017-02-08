@@ -1,6 +1,6 @@
 define(['service/api'], function () {
 
-    angular.module('PS.payments.service', ['PS.service.api'])
+    angular.module('PS.payments.service', ['PS.service.api', 'PS.settings.service'])
         .factory('Payment', function (Api) {
             return Api.resource('/payments/:paymentId', null, {
                 'update': { method:'PUT' }
@@ -9,7 +9,10 @@ define(['service/api'], function () {
         .factory('PaymentMeta', function (Api) {
             return Api.resource('/payments/meta');
         })
-        .factory('PaymentService', function (Payment, $q) {
+        .factory('Payum', function (Settings) {
+            return new Payum(Settings.api);
+        })
+        .factory('PaymentService', function (Payment, Payum, $q) {
             return {
                 payments: [],
 
@@ -83,6 +86,16 @@ define(['service/api'], function () {
                     });
 
                     return this.payments;
+                },
+                createToken: function(token) {
+                    return $q(function (resolve, reject) {
+                        Payum.token.create(token, function(token) {
+                            resolve(token);
+                        });
+                    });
+                },
+                executeToken: function(token) {
+                    Payum.execute(token.targetUrl, '#payum-container');
                 }
             }
         })

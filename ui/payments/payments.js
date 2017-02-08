@@ -91,52 +91,49 @@ define([
             }
 
         })
-        .controller('PS.payments.capture', function ($scope, PaymentService, $stateParams, $state) {
+        .controller('PS.payments.capture', function ($scope, $stateParams, $state, PaymentService) {
 
             PaymentService.getById($stateParams.paymentId).then(function (payment) {
                 $scope.payment = payment;
 
-                var payumServerUrl = "http://"+window.location.hostname;
-                payum = new Payum(payumServerUrl);
-
-                $scope.token = {
+                var token = {
                     type: 'capture',
                     paymentId: $scope.payment.id,
-                    afterUrl: payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id,
+                    afterUrl: $state.href('app.payments.details', {paymentId: $scope.payment.id}, {absolute: true}),
                     targetUrl: ''
                 };
 
-                payum.token.create($scope.token, function(token) {
+                PaymentService.createToken(token).then(function(token) {
                     $scope.token = token;
+                    $scope.show_payum_container = true;
                 });
             });
 
             $scope.execute = function() {
-                payum.execute($scope.token.targetUrl, '#payum-container');
+                PaymentService.executeToken($scope.token);
             }
+
         })
         .controller('PS.payments.authorize', function ($scope, PaymentService, $stateParams, $state) {
 
             PaymentService.getById($stateParams.paymentId).then(function (payment) {
                 $scope.payment = payment;
 
-                var payumServerUrl = "http://"+window.location.hostname;
-                payum = new Payum(payumServerUrl);
-
-                $scope.token = {
+                var token = {
                     type: 'authorize',
                     paymentId: $scope.payment.id,
-                    afterUrl: payumServerUrl + '/client/index.html#/app/payments/details/'+$scope.payment.id,
+                    afterUrl: $state.href('app.payments.details', {paymentId: $scope.payment.id}, {absolute: true}),
                     targetUrl: ''
                 };
 
-                payum.token.create($scope.token, function(token) {
+                PaymentService.createToken(token).then(function(token) {
                     $scope.token = token;
+                    $scope.show_payum_container = true;
                 });
             });
 
             $scope.execute = function() {
-                payum.execute($scope.token.targetUrl, '#payum-container');
+                PaymentService.executeToken($scope.token);
             }
         })
         .controller('PS.payments.list', function ($scope, PaymentService) {
