@@ -20,14 +20,17 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.3.0",
+    "angular": "^1.3",
     "bootstrap": "~3.2.0",
     "angular-ui-router": "~0.2.11",
     "requirejs": "~2.1.15",
     "angular-cookies": "~1.3.0",
     "angular-resource": "~1.3.0",
     "lodash": "~2.4.1",
-    "angular-schema-form": "^0.8.13",
+    "angular-schema-form": "^1.0.0-alpha",
     "angular-schema-form-bootstrap": "^0.2.0"
+  },
+  "resolutions": {
+    "angular": "1.6.2"
   }
 }
