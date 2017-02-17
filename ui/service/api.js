@@ -8,9 +8,7 @@ define(['settings/settings.service'], function () {
 
             return {
                 resource: function (url) {
-                    var args = _.toArray(arguments);
-                    args[0] = Settings.api + url;
-                    return $resource.apply($window, args);
+                    return $resource(Settings.api + url, arguments[1] || {}, arguments[2] || {});
                 }
             };
 

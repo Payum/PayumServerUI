@@ -11,7 +11,8 @@ define(
                 'PS.gateways',
                 'PS.payments',
                 'PS.storages',
-                'PS.settings'
+                'PS.settings',
+                'schemaForm'
             ])
 
             .factory('MainMenu', function () {

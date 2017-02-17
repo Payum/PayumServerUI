@@ -7,20 +7,8 @@
 
                 <div ng-if="error" class="alert alert-danger" role="alert" ng-bind-html="error | ntext"></div>
 
-                <form class="form-horizontal" ng-submit="save()" ng-class="{'has-error': !!error}">
-
-                    <div ps-form-fields="metaFields" ng-model="gateway"></div>
-                    <div ps-form-fields="fields" ps-form-fields-reset="true" ng-model="gateway.config"></div>
-
-                    <div class="form-group">
-                        <div class="col-xs-offset-2 col-xs-10">
-                            <button type="submit" class="btn btn-primary">Create</button>
-                            <a class="btn btn-default" ui-sref="app.gateways">Cancel</a>
-                        </div>
-                    </div>
-                </form>
+                <form name="createGateway" sf-schema="schema" sf-form="form" sf-model="gateway" ng-submit="onSubmit(createGateway)"></form>
             </div>
         </div>
-
     </div>
 </div>
