@@ -21,15 +21,16 @@ define([], function () {
                 check: function () {
 
                     return $q(function (resolve, reject) {
-                        $http.get(Settings.api).
-                            success(function () {
+                        $http.get(Settings.api).then(
+                            function () {
                                 Settings.apiHealth = true;
                                 resolve();
-                            }).
-                            error(function () {
+                            },
+                            function () {
                                 Settings.apiHealth = false;
                                 reject();
-                            });
+                            }
+                        );
                     })
                 },
                 toJSON: function () {
