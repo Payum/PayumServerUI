@@ -6,9 +6,6 @@ define(['service/api'], function () {
                 'update': { method:'PUT' }
             });
         })
-        .factory('PaymentMeta', function (Api) {
-            return Api.resource('/payments/meta');
-        })
         .factory('Payum', function (Settings) {
             return new Payum(Settings.api);
         })
@@ -98,6 +95,16 @@ define(['service/api'], function () {
                     Payum.execute(token.targetUrl, '#payum-container');
                 }
             }
+        })
+        .factory('PaymentSchema', function (Api) {
+            return {
+                "getNew": function () {
+                    return Api.resource('/schema/payments/new.json');
+                },
+                "getNewForm": function () {
+                    return Api.resource('/schema/payments/form/new.json', {}, {'get': {'isArray': true}});
+                }
+            };
         })
     ;
 

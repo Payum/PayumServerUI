@@ -2,7 +2,6 @@ define([
     './payments.service',
     'gateways/gateways.service',
     'filter/ntext',
-    'directive/ps-form-fields/ps-form-fields'
 ], function () {
 
     angular.module('PS.payments', ['ui.router', 'PS.payments.service', 'PS.gateways.service', 'ntext'])
@@ -59,16 +58,6 @@ define([
                         templateUrl: require.toUrl('./payments/authorize.html'),
                         controller: 'PS.payments.authorize'
 
-                    }
-                }
-            });
-
-            $stateProvider.state('app.payments.edit', {
-                url: "/edit/:paymentId",
-                views: {
-                    'main@app': {
-                        templateUrl: require.toUrl('./payments/form.html'),
-                        controller: 'PS.payments.form'
                     }
                 }
             });
@@ -149,45 +138,50 @@ define([
             }
 
         })
-        .controller('PS.payments.form', function ($scope, Payment, Gateway, PaymentService, $state, PaymentMeta) {
+        .controller('PS.payments.form', function ($scope, $state, Payment, PaymentSchema, PaymentService) {
+            $scope.payment = new Payment({});
+            $scope.schema = {};
+            $scope.form = ["*"];
 
-            $scope.gateway = Gateway.get(function () {
-                $scope.gateways = _.toArray($scope.gateway.gateways);
+            PaymentSchema.getNew().get(function (schema) {
+                $scope.schema = schema;
             });
 
-
-            $scope.paymentMeta = PaymentMeta.get(function () {
-                $scope.meta = $scope.paymentMeta.meta;
+            PaymentSchema.getNewForm().get(function (form) {
+                $scope.form = form;
             });
 
-            if ($state.params.paymentId) {
-                PaymentService.getById($state.params.paymentId).then(function (payment) {
-                    $scope.payment = new Payment(payment);
-                });
-            }
-            else {
-                $scope.payment = new Payment();
-            }
-
-
-            $scope.save = function () {
-
+            $scope.onSubmit = function(form) {
                 $scope.error = '';
 
-                PaymentService.save($scope.payment).then(function () {
-                    $state.go('app.payments');
-                }, function (res) {
-                    $scope.error = 'Invalid form';
+                // First we broadcast an event so all fields validate themselves
+                $scope.$broadcast('schemaFormValidate');
 
-                    if (res.data.errors) {
-                        $scope.error = res.data.errors;
-                    }
+                // Then we check if the form is valid
+                if (form.$valid) {
+                    $scope.payment.$save(function () {
+                        $state.go('app.payments');
+                    }, function (res) {
 
-                    if (res.data.message) {
-                        $scope.error = res.data.message;
-                    }
-                });
+                        if (res.data.message) {
+                            $scope.error = res.data.message;
 
+                            return;
+                        }
+
+                        if (res.data.errors) {
+                            for (property in res.data.errors) {
+                                if (false === res.data.errors.hasOwnProperty(property)) {
+                                    continue;
+                                }
+
+                                for (index in res.data.errors[property]) {
+                                    $scope.$broadcast('schemaForm.error.'+property, res.data.errors[property][index], res.data.errors[property][index]);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         })
 

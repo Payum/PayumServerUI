@@ -24,7 +24,7 @@
                     <td>{{payment.number}}</td>
                     <td>{{payment.gatewayName}}</td>
                     <td>{{payment.description}}</td>
-                    <td>{{payment.totalAmount}}</td>
+                    <td>{{payment.totalAmountInput}}</td>
                     <td>{{payment.currencyCode}}</td>
                     <td>{{payment.status}}</td>
                     <td>
@@ -33,7 +33,6 @@
                             <a class="btn btn-xs btn-default" ui-sref="app.payments.capture({paymentId: payment.id})">Capture</a>
                             <a class="btn btn-xs btn-default" ng-click="sync(payment)">Sync</a>
                             <a class="btn btn-xs btn-default" ui-sref="app.payments.details({paymentId: payment.id})">Details</a>
-                            <a class="btn btn-xs btn-default" ui-sref="app.payments.edit({paymentId: payment.id})">Edit</a>
                             <a class="btn btn-xs btn-danger" ng-click="remove(payment)">Delete</a>
                         </div>
                     </td>

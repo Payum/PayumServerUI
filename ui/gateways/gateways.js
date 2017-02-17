@@ -1,5 +1,4 @@
 define([
-    'directive/ps-form-fields/ps-form-fields',
     'filter/ntext',
     './gateways.service'
 ], function () {
@@ -7,7 +6,6 @@ define([
     angular.module('PS.gateways', [
             'ui.router',
             'PS.service.api',
-            'PS.directive.ps-form-fields',
             'PS.gateways.service',
             'ntext',
             'schemaForm'
@@ -97,9 +95,15 @@ define([
                         $state.go('app.gateways');
                     }, function (res) {
 
+                        if (res.data.message) {
+                            $scope.error = res.data.message;
+
+                            return;
+                        }
+
                         if (res.data.errors) {
                             for (property in res.data.errors) {
-                                if (false == res.data.errors.hasOwnProperty(property)) {
+                                if (false === res.data.errors.hasOwnProperty(property)) {
                                     continue;
                                 }
 
@@ -107,10 +111,6 @@ define([
                                     $scope.$broadcast('schemaForm.error.'+property, res.data.errors[property][index], res.data.errors[property][index]);
                                 }
                             }
-                        }
-
-                        if (res.data.message) {
-                            $scope.error = res.data.message;
                         }
                     });
                 }
