@@ -10,7 +10,7 @@ install:
     - npm install -g bower
 
 script:
-    - bower install
+    - bower install --force --force-latest
 
 after_success:
   - rm -rf vendor

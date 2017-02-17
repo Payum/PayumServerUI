@@ -1,5 +1,4 @@
 define([
-    'directive/ps-form-fields/ps-form-fields',
     'filter/ntext',
     './gateways.service'
 ], function () {
@@ -7,9 +6,9 @@ define([
     angular.module('PS.gateways', [
             'ui.router',
             'PS.service.api',
-            'PS.directive.ps-form-fields',
             'PS.gateways.service',
-            'ntext'
+            'ntext',
+            'schemaForm'
         ])
 
         .config(function ($stateProvider) {
@@ -33,7 +32,6 @@ define([
                     }
                 }
             });
-
         })
 
         .controller('PS.gateways.list', function ($scope, Gateway) {
@@ -52,50 +50,71 @@ define([
 
         })
 
-        .controller('PS.gateways.form', function ($scope, Gateway, GatewayMeta, $state, $sce) {
-
-            $scope.error = '';
-
+        .controller('PS.gateways.form', function ($scope, $state, Gateway, GatewaySchema) {
             $scope.gateway = new Gateway({
                 gatewayName: '',
                 factoryName: '',
                 config: {}
             });
-
-
-            $scope.metasConfig = GatewayMeta.get(function () {
-                $scope.metaFields = $scope.metasConfig.generic;
-            });
-
+            $scope.schema = {};
+            $scope.form = ["*"];
 
             $scope.$watch('gateway.factoryName', function () {
-                $scope.updateForm();
+                var name = $scope.gateway.factoryName;
+
+                $scope.gateway.config = {};
+
+                if (name) {
+                    GatewaySchema.getByName(name).get(function (schema) {
+                        $scope.schema = schema;
+                    });
+
+                    GatewaySchema.getFormByName(name).get(function (form) {
+                        $scope.form = form;
+                    });
+                } else {
+                    GatewaySchema.getDefault().get(function (schema) {
+                        $scope.schema = schema;
+                    });
+
+                    GatewaySchema.getDefaultForm().get(function (form) {
+                        $scope.form = form;
+                    });
+                }
             });
 
-
-            $scope.updateForm = function () {
-                $scope.fields = $scope.gateway.factoryName && $scope.metasConfig.meta[$scope.gateway.factoryName] ? $scope.metasConfig.meta[$scope.gateway.factoryName].config : [];
-            }
-
-            $scope.save = function () {
-
+            $scope.onSubmit = function(form) {
                 $scope.error = '';
 
-                $scope.gateway.$save(function () {
-                    $state.go('app.gateways');
-                }, function (res) {
-                    $scope.error = 'Invalid form';
+                // First we broadcast an event so all fields validate themselves
+                $scope.$broadcast('schemaFormValidate');
 
-                    if (res.data.errors) {
-                        $scope.error = res.data.errors;
-                    }
+                // Then we check if the form is valid
+                if (form.$valid) {
+                    $scope.gateway.$save(function () {
+                        $state.go('app.gateways');
+                    }, function (res) {
 
-                    if (res.data.message) {
-                        $scope.error = res.data.message;
-                    }
-                });
+                        if (res.data.message) {
+                            $scope.error = res.data.message;
+
+                            return;
+                        }
+
+                        if (res.data.errors) {
+                            for (property in res.data.errors) {
+                                if (false === res.data.errors.hasOwnProperty(property)) {
+                                    continue;
+                                }
+
+                                for (index in res.data.errors[property]) {
+                                    $scope.$broadcast('schemaForm.error.'+property, res.data.errors[property][index], res.data.errors[property][index]);
+                                }
+                            }
+                        }
+                    });
+                }
             }
         })
     ;
-
 });
