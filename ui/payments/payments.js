@@ -98,7 +98,9 @@ define([
                 });
             });
 
-            $scope.execute = function() {
+            $scope.execute = function($event) {
+                $event.stopPropagation();
+
                 PaymentService.executeToken($scope.token);
             }
 
