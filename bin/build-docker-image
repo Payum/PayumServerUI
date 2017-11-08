@@ -3,6 +3,8 @@
 if [ "$BRANCH" == "master" ]; then
     echo "Building latest";
 
+    sed -e "s/t\=1234567890/t=`date +%s`/g" index.html
+
     wget https://raw.githubusercontent.com/Payum/PayumServer/master/web/payum.js
 
     export REPO=payum/server-ui
