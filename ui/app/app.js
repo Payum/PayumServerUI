@@ -10,6 +10,7 @@ define(
                 'PS.gateways',
                 'PS.payments',
                 'PS.settings',
+                'PS.settings.service',
                 'schemaForm'
             ])
 
@@ -30,7 +31,17 @@ define(
                     }
                 ]
             })
+            .run(function ($rootScope, $state, $location, Settings) {
+              $rootScope.$on('$stateChangeStart', function(event, toState) {
+                if ('app.settings' === toState.name) {
+                    return;
+                }
 
+                Settings.check().then(function () {}, function () {
+                  $state.go('app.settings');
+                });
+              });
+            })
             .config(function ($stateProvider, $urlRouterProvider) {
 
                 $urlRouterProvider.otherwise('/app');
@@ -43,18 +54,8 @@ define(
 
             })
             .controller('PS.app', function ($scope, $state, MainMenu, Settings) {
-
                 $scope.mainMenu = MainMenu;
-
-                Settings.check().then(function () {
-                    if ($state.is('app')) {
-                        $state.go('app.gateways');
-                    }
-                }, function () {
-                    $state.go('app.settings');
-                });
-
-            });
-
+            })
+        ;
     });
 

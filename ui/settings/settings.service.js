@@ -19,6 +19,11 @@ define([], function () {
                 },
                 
                 check: function () {
+                    if (!Settings.api) {
+                      return $q(function (resolve, reject) {
+                        reject();
+                      });
+                    }
 
                     return $q(function (resolve, reject) {
                         $http.get(Settings.api).then(
@@ -31,7 +36,7 @@ define([], function () {
                                 reject();
                             }
                         );
-                    })
+                    });
                 },
                 toJSON: function () {
                     return {
@@ -44,7 +49,7 @@ define([], function () {
                 Settings.api = $cookieStore.get('api');
             }
 
-            return  Settings
+            return Settings;
         });
 
 });

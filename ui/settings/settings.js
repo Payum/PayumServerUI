@@ -17,7 +17,6 @@ define(['./settings.service'], function () {
         .controller('PS.settings', function ($scope, Settings, $state, $location) {
 
             $scope.settings = Settings;
-            Settings.save($location.search());
 
             $scope.save = function (settings) {
                 Settings.save(settings);
