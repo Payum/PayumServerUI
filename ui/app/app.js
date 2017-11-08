@@ -2,7 +2,6 @@ define(
     [
         'gateways/gateways',
         'payments/payments',
-        'storages/storages',
         'settings/settings'
     ], function () {
 
@@ -10,7 +9,6 @@ define(
                 'ui.router',
                 'PS.gateways',
                 'PS.payments',
-                'PS.storages',
                 'PS.settings',
                 'schemaForm'
             ])
