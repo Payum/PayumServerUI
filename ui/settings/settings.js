@@ -18,6 +18,14 @@ define(['./settings.service'], function () {
 
             $scope.settings = Settings;
 
+            var query = $location.search();
+            if (query.api) {
+                Settings.api = query.api;
+                Settings.check(function() {
+                    Settings.save();
+                });
+            }
+
             $scope.save = function (settings) {
                 Settings.save(settings);
                 $state.go('app.gateways');
